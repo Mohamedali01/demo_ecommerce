@@ -1,8 +1,8 @@
 import 'package:demo_ecommerce/constants.dart';
 import 'package:demo_ecommerce/controller/auth_provider.dart';
 import 'package:demo_ecommerce/core/size_config.dart';
-import 'package:demo_ecommerce/view/sign_up_screen.dart';
-import 'package:demo_ecommerce/view/splash_screen.dart';
+import 'package:demo_ecommerce/view/auth/sign_in_screen.dart';
+import 'package:demo_ecommerce/view/auth/splash_screen.dart';
 import 'package:demo_ecommerce/widgets/custom_rounded_button.dart';
 import 'package:demo_ecommerce/widgets/custom_text.dart';
 import 'package:demo_ecommerce/widgets/custom_text_form_field.dart';
@@ -10,8 +10,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
-class SignInScreen extends StatelessWidget {
-  const SignInScreen({Key? key}) : super(key: key);
+import '../home/control_screen.dart';
+
+class SignUpScreen extends StatelessWidget {
+  const SignUpScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +38,7 @@ class SignInScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CustomText(
-                'Login',
+                'Signup',
                 color: Color(0xff323232),
                 fontSize: defaultSize * 3.5,
               ),
@@ -44,27 +46,33 @@ class SignInScreen extends StatelessWidget {
                 height: defaultSize * 6,
               ),
               CustomTextFormField(
+                label: 'Name',
+              ),
+              SizedBox(
+                height: defaultSize * 2,
+              ),
+              CustomTextFormField(
                 label: 'Email',
               ),
               SizedBox(
-                height: defaultSize * 4.5,
+                height: defaultSize * 2,
               ),
               Consumer<AuthProvider>(builder: (_, authProvider, child) {
                 return CustomTextFormField(
-                  obscure: authProvider.isSignInPassVisible,
-                  suffixIcon: authProvider.isSignInPassVisible
+                  obscure: authProvider.isSignUpPassVisible,
+                  suffixIcon: authProvider.isSignUpPassVisible
                       ? IconButton(
                           onPressed: () {
-                            authProvider.changeSignInPassVisibility();
+                            authProvider.changeSignUpPassVisibility();
                           },
-                          icon: Icon(Icons.visibility),
+                          icon: Icon(Icons.visibility_off),
                           color: Color(kEyeVisibilityColor),
                         )
                       : IconButton(
                           onPressed: () {
-                            authProvider.changeSignInPassVisibility();
+                            authProvider.changeSignUpPassVisibility();
                           },
-                          icon: Icon(Icons.visibility_off),
+                          icon: Icon(Icons.visibility),
                           color: Color(kEyeVisibilityColor),
                         ),
                   label: 'Password',
@@ -74,10 +82,14 @@ class SignInScreen extends StatelessWidget {
                 height: defaultSize * 2.5,
               ),
               CustomRoundedButton(
+                onPressed: () {
+                  Get.to(ControlScreen());
+                },
+                height: defaultSize * 4.5,
                 color: Color(kButtonColor),
                 width: double.infinity,
                 child: CustomText(
-                  'Log in',
+                  'Sign up',
                   color: Colors.white,
                 ),
               ),
@@ -88,19 +100,19 @@ class SignInScreen extends StatelessWidget {
                 alignment: Alignment.center,
                 child: GestureDetector(
                   onTap: () {
-                    Get.to(SignUpScreen());
+                    Get.to(SignInScreen());
                   },
                   child: RichText(
                     text: TextSpan(
                       children: [
                         TextSpan(
-                          text: 'Don’t have an account ?  ',
+                          text: 'Already have an account ?  ',
                           style: TextStyle(
                               color: Color(kTextColor),
                               fontSize: defaultSize * 1.6),
                         ),
                         TextSpan(
-                          text: 'Sign Up',
+                          text: 'Sign in',
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: defaultSize * 1.6,

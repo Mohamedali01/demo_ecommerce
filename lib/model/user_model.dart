@@ -3,6 +3,7 @@ class UserModel {
   String? email;
   String? userId;
 
+
   UserModel({this.name, this.email, this.userId});
 
   UserModel.fromJson(Map<dynamic, dynamic>? map) {
