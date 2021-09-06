@@ -7,6 +7,7 @@ import 'package:demo_ecommerce/view/home/cart_screen.dart';
 import 'package:demo_ecommerce/widgets/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
@@ -25,6 +26,22 @@ class ProductDetailsScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0.0,
+        actions: [
+          IconButton(
+              onPressed: () {
+                homeProvider.toggleFavourite(productModel);
+                },
+              icon: productModel.favourite
+                  ? Icon(
+                      Icons.favorite,
+                      color: Colors.red,
+                      size: 30,
+                    )
+                  : Icon(
+                      Icons.favorite_border,
+                      color: Colors.red,
+                    ))
+        ],
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,
@@ -187,9 +204,9 @@ class ProductDetailsScreen extends StatelessWidget {
                               listOfSizes[index],
                               fontSize: defaultSize * 2,
                               color: homeProvider.checkWhichSize(
-                                  size, listOfSizes[index])
-                                  ?Colors.white:Colors.black,
-
+                                      size, listOfSizes[index])
+                                  ? Colors.white
+                                  : Colors.black,
                             ),
                           ),
                         );
@@ -210,7 +227,22 @@ class ProductDetailsScreen extends StatelessWidget {
             ),
             InkWell(
               onTap: () {
-                homeProvider.addToCart(productModel);
+                homeProvider.addToCart(
+                  ProductModel(
+                      numberOfReviews: productModel.numberOfReviews,
+                      rating: productModel.rating,
+                      size: productModel.size,
+                      category: productModel.category,
+                      favourite: productModel.favourite,
+                      salePrice: productModel.salePrice,
+                      price: productModel.price,
+                      description: productModel.description,
+                      image: productModel.image,
+                      countInStock: productModel.countInStock,
+                      imageFilePath: productModel.imageFilePath,
+                      title: productModel.title,
+                      numberOfPieces: 1),
+                );
                 Fluttertoast.showToast(
                     msg: 'Product added to cart successfully');
                 Get.back();

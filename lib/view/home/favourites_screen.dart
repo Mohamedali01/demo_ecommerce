@@ -11,6 +11,7 @@ class FavouritesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final homeProvider = Provider.of<HomeController>(context);
     final defaultSize = SizeConfig.defaultSize;
+    homeProvider.getNumberOfFavourites();
     return Scaffold(
       backgroundColor: Colors.blueAccent,
       appBar: AppBar(
@@ -30,6 +31,7 @@ class FavouritesScreen extends StatelessWidget {
           itemBuilder: (BuildContext context, int index) {
             return GestureDetector(
               onTap: () {
+              print('Mohamed Ali ${homeProvider.favouriteModels[index].title}');
                 Get.to(
                     ProductDetailsScreen(homeProvider.favouriteModels[index]));
               },
@@ -42,12 +44,12 @@ class FavouritesScreen extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    homeProvider.productModels[index].imageFilePath == null
+                    homeProvider.favouriteModels[index].imageFilePath == null
                         ? Container(
                             height: SizeConfig.screenWidth * 0.45,
                             width: SizeConfig.screenWidth * 0.5,
                             child: Image.asset(
-                              homeProvider.productModels[index].image!,
+                              homeProvider.favouriteModels[index].image!,
                               fit: BoxFit.fill,
                             ),
                           )
@@ -55,7 +57,7 @@ class FavouritesScreen extends StatelessWidget {
                             height: SizeConfig.screenWidth * 0.45,
                             width: SizeConfig.screenWidth * 0.5,
                             child: Image.file(
-                              homeProvider.productModels[index].imageFilePath!,
+                              homeProvider.favouriteModels[index].imageFilePath!,
                               fit: BoxFit.fill,
                             ),
                           ),
@@ -65,20 +67,20 @@ class FavouritesScreen extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        if (homeProvider.productModels[index].salePrice != null)
+                        if (homeProvider.favouriteModels[index].salePrice != null)
                           CustomText(
-                            '\$${homeProvider.productModels[index].price!}',
+                            '\$${homeProvider.favouriteModels[index].price!}',
                             color: Colors.green,
                             fontSize: defaultSize * 2,
                           ),
                         CustomText(
-                          '\$${homeProvider.productModels[index].price!}',
-                          color: homeProvider.productModels[index].salePrice !=
+                          '\$${homeProvider.favouriteModels[index].price!}',
+                          color: homeProvider.favouriteModels[index].salePrice !=
                                   null
                               ? Colors.red
                               : Colors.black,
                           deletedText:
-                              homeProvider.productModels[index].salePrice !=
+                              homeProvider.favouriteModels[index].salePrice !=
                                       null
                                   ? true
                                   : false,
@@ -92,7 +94,7 @@ class FavouritesScreen extends StatelessWidget {
                     Container(
                       height: SizeConfig.screenHeight * 0.022,
                       child: CustomText(
-                        homeProvider.productModels[index].title!,
+                        homeProvider.favouriteModels[index].title!,
                         color: Colors.black,
                         overflow: TextOverflow.ellipsis,
                         fontSize: SizeConfig.screenHeight * 0.02,
